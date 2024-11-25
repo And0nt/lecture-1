@@ -1,0 +1,36 @@
+class GeneratorFactory:
+    def __init__(self, start, step):
+        self.start = start
+        self.step = step
+
+    def __iter__(self):
+        def generator():
+            value = self.start
+            while True:
+                yield value
+                value += self.step
+        return generator()
+
+factory = GeneratorFactory(0, 2)
+for gen in factory:
+    print(int(gen))
+
+def safe_eval(func):
+    def wrapper(expression):
+        try:
+            return func(expression)
+        except Exception as e:
+            print(f"Ошибка при вычислении: {e}")
+            return None
+    return wrapper
+
+def calculate(expression):
+    return eval(expression)
+
+class StudentSimulator:
+
+    def __iter__(self):
+        while True:
+            day_result = self.simulate_day()
+            yield day_result
+
